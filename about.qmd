@@ -1,0 +1,47 @@
+---
+title: "About"
+toc: false
+---
+
+## Amber Lee
+
+Platform / Infrastructure Engineer
+
+Amber worked at Devstack for about three years as a Cloud & AI Platform Engineer, building and operating platforms based on Kubernetes, Kubeflow, and OpenStack. Across services actually delivered to end users, she worked through multiple layers of the platform — backend development, authentication integration, GPU workload operations, cloud resource management, billing, monitoring, and troubleshooting. More recently, she has been extending her infrastructure operations experience into AIOps by connecting it with a LangGraph-based LLM Agent.
+
+She starts an MSc in Data Science at the University of Bath in September 2026.
+
+## Professional Experience
+
+**Devstack — Cloud & AI Platform Engineer** (2023 – Present)
+
+- Developed and enhanced an OpenStack-based cloud console (MetaOps Console)
+- Integrated monitoring (Prometheus) and billing (CloudKitty)
+- Built automated resource-request workflows using Adjutant and Mistral
+- Developed a backup UI based on OpenStack Freezer
+- Deployed and operated services in Kubernetes environments
+- Built and operated AI competition platforms (KAIST, Korea Astronomy and Space Science Institute)
+- Integrated JupyterHub and Kubeflow for AI environments
+- Developed AI-security integration based on Snort + OpenWebUI
+- Contributed to proposals for government-funded AI projects, including CWE-based security data and AI platforms
+
+## Education
+
+- **Hongik University** — B.Sc. Computer Engineering (2018 – 2024)
+- **HyperionDev** — Data Science Bootcamp, UK (2023)
+- **University of Bath** — MSc Data Science (2026.09 – ), Global Excellence Scholarship recipient
+
+## Skills
+
+- **Cloud & DevOps**: OpenStack, Kubernetes, Docker, AWS
+- **Backend / Frontend**: FastAPI, Next.js, React
+- **AI Platforms**: Kubeflow, JupyterHub, OpenWebUI
+- **Monitoring**: Prometheus, CloudKitty
+- **Security**: Keycloak (OIDC), Snort
+- **Languages**: Python, JavaScript, SQL
+
+## Contact
+
+- **Email**: fmadkdl113@gmail.com
+- **GitHub**: [github.com/PinkPaca](https://github.com/PinkPaca)
+- **LinkedIn**: [linkedin.com/in/ahreum-lee-012a58249](https://www.linkedin.com/in/ahreum-lee-012a58249/)

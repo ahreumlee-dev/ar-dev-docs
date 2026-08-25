@@ -1,0 +1,60 @@
+---
+title: ""
+page-layout: full
+toc: false
+---
+
+::: {.hero}
+# Amber Lee
+**Platform / Infrastructure Engineer**
+
+A record of building, operating, and troubleshooting across every layer of a platform — Kubernetes-based service deployment and operations, Kubeflow-based GPU Notebook environments, OpenStack-based private cloud management, Keycloak-based authentication integration, and LLM Agent-driven AIOps.
+:::
+
+## Focus Areas
+
+- Kubernetes-based service deployment and operations
+- Kubeflow-based GPU Notebook environment provisioning
+- OpenStack-based private cloud operations
+- Cloud billing / monitoring
+- Keycloak-based authentication integration
+- LLM / Agent-based AIOps
+- Production operations and troubleshooting
+
+## Projects
+
+::: {.card-grid}
+
+::: {.project-card}
+### [AI Competition Platform](projects/ai-competition.qmd)
+Built and operated a Kubernetes/Kubeflow-based GPU AI competition platform
+
+<span class="keyword-tag">Kubernetes</span>
+<span class="keyword-tag">Kubeflow</span>
+<span class="keyword-tag">GPU</span>
+<span class="keyword-tag">Keycloak</span>
+<span class="keyword-tag">FastAPI</span>
+<span class="keyword-tag">MariaDB</span>
+:::
+
+::: {.project-card}
+### [MetaOps Cloud Console](projects/metaops.qmd)
+OpenStack-based private cloud management and operations platform
+
+<span class="keyword-tag">OpenStack</span>
+<span class="keyword-tag">CloudKitty</span>
+<span class="keyword-tag">OpenSearch</span>
+<span class="keyword-tag">Monitoring</span>
+:::
+
+::: {.project-card}
+### [AIOps Platform](projects/aiops.qmd)
+AIOps system connecting an LLM Agent to existing infrastructure platforms
+
+<span class="keyword-tag">LangGraph</span>
+<span class="keyword-tag">OpenWebUI</span>
+<span class="keyword-tag">Keycloak</span>
+<span class="keyword-tag">LLM Agent</span>
+:::
+
+:::

@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Amber Lee"
+  description: "Platform / Infrastructure Engineer — Engineering Portfolio"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - text: Projects
+        menu:
+          - href: projects/ai-competition.qmd
+            text: AI Competition Platform
+          - href: projects/metaops.qmd
+            text: MetaOps Cloud Console
+          - href: projects/aiops.qmd
+            text: AIOps Platform
+    right:
+      - icon: github
+        href: https://github.com/
+        aria-label: GitHub
+
+  page-footer:
+    center: "© 2026 Amber Lee"
+
+format:
+  html:
+    theme:
+      light: [cosmo, custom.scss]
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    code-copy: true
+    highlight-style: github
+    fig-align: center
+
+execute:
+  freeze: auto

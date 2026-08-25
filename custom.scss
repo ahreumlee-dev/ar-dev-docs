@@ -1,0 +1,60 @@
+/*-- scss:defaults --*/
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
+
+$font-family-sans-serif: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+
+// Blue / sky-blue palette
+$primary:   #2563eb;  // main blue
+$secondary: #38bdf8;  // sky blue accent
+$body-bg:    #ffffff;
+$body-color: #1f2937;
+$link-color: $primary;
+
+$navbar-bg: #eff6ff;
+$navbar-fg: #1e3a8a;
+$navbar-hl: $primary;
+
+$footer-bg: #f0f9ff;
+$footer-fg: #475569;
+
+$code-color: #2563eb;
+$code-bg:    #eff6ff;
+
+/*-- scss:rules --*/
+
+body {
+  font-feature-settings: "tnum";
+}
+
+.navbar {
+  border-bottom: 1px solid #dbeafe;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.06);
+}
+
+.navbar-title {
+  font-weight: 700;
+  color: #1e3a8a !important;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+h2 {
+  border-bottom: 2px solid #dbeafe;
+  padding-bottom: 0.35rem;
+}
+
+a {
+  color: $primary;
+}
+a:hover {
+  color: $secondary;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a.active {
+  color: $primary;
+  border-left: 2px solid $primary;
+}
