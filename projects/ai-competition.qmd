@@ -27,7 +27,8 @@ Join competition
 → Check leaderboard
 ```
 
-- ~30 teams advanced to the final round
+- 134 participants across 92 teams entered the competition
+- 33 teams (63 participants) advanced to the final round
 - One NVIDIA A100 40GB GPU allocated per team
 - Kubernetes / Kubeflow Notebook-based per-team work environment
 - Automated submission / scoring system
