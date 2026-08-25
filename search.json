@@ -1,0 +1,247 @@
+[
+  {
+    "objectID": "projects/ai-competition.html",
+    "href": "projects/ai-competition.html",
+    "title": "AI Competition Platform",
+    "section": "",
+    "text": "Role\nPlatform / Infrastructure Engineer\n\n\nDomain\nAI Competition Platform\n\n\nPeriod\n2026\n\n\nStack\nKubernetes · Kubeflow · Keycloak · FastAPI · MariaDB · Ant Design"
+  },
+  {
+    "objectID": "projects/ai-competition.html#overview",
+    "href": "projects/ai-competition.html#overview",
+    "title": "AI Competition Platform",
+    "section": "1. Overview",
+    "text": "1. Overview\nA platform that lets AI competition participants go through the entire competition workflow through a web platform.\nJoin competition\n→ Create GPU Notebook\n→ Use dataset\n→ Train model\n→ Submit results\n→ Automatic scoring\n→ Check leaderboard\n\n~30 teams advanced to the final round\nOne NVIDIA A100 40GB GPU allocated per team\nKubernetes / Kubeflow Notebook-based per-team work environment\nAutomated submission / scoring system\n\n\n\n\n\n\n\nNoteMy Role\n\n\n\n\nDesigned and provisioned per-team infrastructure manifests (Kubeflow Profile / Notebook / PV / PVC)\nBuilt a Python (Jinja2)-based pipeline to auto-generate manifests\nOperated Kubernetes Notebooks and handled incidents\nSupported Keycloak-based authentication integration\nSupported building the scoring infrastructure (Kubernetes Job-based)\nSet up and supported a separate GCP validation environment (model validation itself was handled by another team member)"
+  },
+  {
+    "objectID": "projects/ai-competition.html#platform-ui",
+    "href": "projects/ai-competition.html#platform-ui",
+    "title": "AI Competition Platform",
+    "section": "2. Platform UI",
+    "text": "2. Platform UI\n\n\n\n\n\n\nFigure 1: Competition Dashboard — the participant’s main screen, showing the competition overview, schedule, and submission policy at a glance\n\n\n\nNotebook creation requests are passed from the backend to Kubernetes, where the Kubeflow Notebook Controller creates a Notebook Pod for each team.\n\n\n\n\n\n\nFigure 2: Kubeflow Notebooks list — each team has a Notebook Pod running in an isolated namespace, with GPU/CPU/Memory allocations shown\n\n\n\n\n\n\n\n\n\nFigure 3: Baseline code provided to participants — covers everything from data loading to generating the submission file inside JupyterLab\n\n\n\n\n\n\n\n\n\nFigure 4: Leaderboard (Public) — live rankings shown during the final round (team names masked)\n\n\n\n\n\n\n\n\n\nFigure 5: Leaderboard (Final) — final rankings with Public/Private/Final scores revealed after the competition ends (team names masked)\n\n\n\n\n\n\n\n\n\nFigure 6: Admin — competition management screen, where admins configure the schedule, submission limits, and participation terms\n\n\n\n\n\n\n\n\n\nFigure 7: Admin — final-round submission status. Shows each team’s submission count, most recent submission time, and best Public/Private/Final scores at a glance (team names masked)\n\n\n\nThe admin UI was built with Ant Design and Tiptap, and lets admins manage the competition schedule and notices."
+  },
+  {
+    "objectID": "projects/ai-competition.html#system-architecture",
+    "href": "projects/ai-competition.html#system-architecture",
+    "title": "AI Competition Platform",
+    "section": "3. System Architecture",
+    "text": "3. System Architecture\n\n\n\n\n\nflowchart TD\n    U[User] --&gt; W[Web Application]\n    W --&gt; AUTH[Authentication]\n    AUTH --&gt; KC[Keycloak]\n    W --&gt; NB[Notebook Management]\n    NB --&gt; K8S[Kubernetes]\n    K8S --&gt; KF[Kubeflow Notebook]\n    KF --&gt; GPU[GPU Pod]\n    W --&gt; SUB[Submission]\n    SUB --&gt; SS[Submission Storage]\n    SS --&gt; SJ[Scoring Job]\n    SJ --&gt; DB[(Database)]\n    DB --&gt; LB[Leaderboard]"
+  },
+  {
+    "objectID": "projects/ai-competition.html#kubernetes-kubeflow",
+    "href": "projects/ai-competition.html#kubernetes-kubeflow",
+    "title": "AI Competition Platform",
+    "section": "4. Kubernetes / Kubeflow",
+    "text": "4. Kubernetes / Kubeflow\nTo give each team an isolated work environment, I created one Kubeflow Profile per team (namespace-level isolation + RBAC) and provisioned a Notebook and PV/PVC inside each.\n\nBuilt a pipeline that generates per-team Kubeflow Profile / Notebook / PersistentVolume / PersistentVolumeClaim manifests using Python and Jinja2 templates\nStandardized repetitive infrastructure provisioning across ~30 teams as code\nConnected per-team GPU / CPU / Memory resources and NFS-backed storage\nManaged Notebook Pod lifecycle and handled incidents during operation\nProvided Kubeflow Pipelines alongside Notebooks, while disabling other Kubeflow features to keep the operational scope narrow\nLimited GPU allocation to one per team (no MIG or other GPU-splitting), and designed the operational policy so teams had to stop their Notebook server before running a GPU-requiring pipeline step"
+  },
+  {
+    "objectID": "projects/ai-competition.html#authentication-keycloak",
+    "href": "projects/ai-competition.html#authentication-keycloak",
+    "title": "AI Competition Platform",
+    "section": "5. Authentication — Keycloak",
+    "text": "5. Authentication — Keycloak\nThe authentication structure for accessing the competition web platform and Kubeflow Notebooks.\n\nKeycloak-based user authentication\nPlatform ↔︎ Keycloak integration\nPer-team Notebook access control\n\n\n\n\n\n\n\nNote\n\n\n\n[TODO: fill in further detail once the OAuth/OIDC implementation specifics are confirmed]"
+  },
+  {
+    "objectID": "projects/ai-competition.html#submission-scoring-system",
+    "href": "projects/ai-competition.html#submission-scoring-system",
+    "title": "AI Competition Platform",
+    "section": "6. Submission & Scoring System",
+    "text": "6. Submission & Scoring System\n\n\n\n\n\nflowchart TD\n    P[Participant] --&gt; UP[Submission Upload]\n    UP --&gt; V[Validation]\n    V --&gt; ST[Storage]\n    ST --&gt; SJ[Kubernetes Scoring Job]\n    SJ --&gt; PUB[Public Score]\n    SJ --&gt; PRIV[Private Score]\n    PUB --&gt; DB[(MariaDB)]\n    PRIV --&gt; DB\n    DB --&gt; LB[Leaderboard]\n\n\n\n\n\n\n\nSubmission Handling\n\nManaged submission artifacts: submission.csv, code.ipynb, model files\nFile size limits and submission-count management\nCSV format validation\n\n\n\nDuplicate Detection\nApplied a hash-based check to prevent duplicate submissions of the same submission CSV.\nsubmission.csv\n      ↓\nSHA-256\n      ↓\nCompare against existing submission hashes\n      ↓\nDuplicate / New submission\n\n\nScoring Job\nRan an isolated Kubernetes Job for each submission to perform scoring.\n\nA separate Kubernetes Job runs for every submission\nCompares results against a hidden ground truth\nComputes Public / Private scores\nThe scoring code checks out a specific tag/commit from a separately version-controlled repository before running\nThe hidden ground truth is mounted read-only and is never mounted into participant (student) namespaces — scoring runs in a namespace isolated from participants’ own work environment\nResults are stored in the database and reflected on the leaderboard\n\n\n\n\n\n\n\nNote\n\n\n\n[TODO: only disclose the specific scoring algorithm or competition data to the extent it can be made public]"
+  },
+  {
+    "objectID": "projects/ai-competition.html#validation-infrastructure",
+    "href": "projects/ai-competition.html#validation-infrastructure",
+    "title": "AI Competition Platform",
+    "section": "7. Validation Infrastructure",
+    "text": "7. Validation Infrastructure\n\n\n\n\n\n\nImportantImportant — Division of Responsibility\n\n\n\nModel validation itself (reproducibility checks, ruling on submission rule violations, model performance validation) was handled by another team member. What I was responsible for was setting up a separate GCP-based validation environment and supporting the infrastructure so that person could carry out validation independently.\n\n\n\nMy Responsibility\n\nSet up a separate GCP validation environment\nProvided a Kubernetes / Kubeflow Notebook environment for the validation lead\nConfigured access to datasets / submissions\nConnected the necessary storage / volumes\nProvisioned Notebook Pods\nHandled infrastructure issues that arose in the validation environment\n\nCompetition Environment\n       │\n       │ dataset / submissions\n       ▼\nSeparate GCP Validation Environment\n       │\n       ▼\nKubernetes / Kubeflow\n       │\n       ▼\nValidation Notebook\n       │\n       ▼\nValidator"
+  },
+  {
+    "objectID": "projects/ai-competition.html#production-troubleshooting",
+    "href": "projects/ai-competition.html#production-troubleshooting",
+    "title": "AI Competition Platform",
+    "section": "8. Production Troubleshooting",
+    "text": "8. Production Troubleshooting\n\nIncident — DiskPressure\nProblem. During operation, some teams generated or compressed large files inside their Notebook environment, causing node storage usage to spike. Kubernetes entered a DiskPressure state and began evicting Notebook Pods.\nInvestigation.\nkubectl describe node\nkubectl describe pod\ndf -h\ndu -sh\nChecked ephemeral storage usage on the node and located the large files.\nRoot Cause. Large files/compressed archives in a user’s workspace exceeded the ephemeral storage threshold.\nResolution. Cleaned up the offending workspace and recovered the affected Notebook Pods.\n\n\n\n\n\n\nTipLesson Learned\n\n\n\nIn multi-tenant Notebook operations, managing ephemeral storage matters just as much as GPU/CPU/RAM, and user workload environments need a disk usage policy.\n\n\n\n\nIncident — MariaDB Connection Exhaustion\nHTTP 502\n→ Backend failure\n→ Check DB connections\n→ MariaDB max_connections issue\nStarting from an HTTP 502 during a backend outage, I checked the DB connection state and identified and resolved a MariaDB max_connections issue.\n\n\nIncident — Large Model Upload\nIdentified a reverse-proxy buffering/request-handling issue during large model file uploads, and resolved it by adjusting the actual applied settings (Nginx proxy_request_buffering, upload size, timeout, etc.).\n\n\nIncident — Notebook OOM\nInvestigated Pod/Kernel abnormalities caused by spikes in Notebook memory usage and addressed them by adjusting resource limits.\n\n\n\n\n\n\nNote\n\n\n\n[TODO: add any real Pod Scheduling / Provisioning incidents, if they occurred]"
+  },
+  {
+    "objectID": "projects/ai-competition.html#what-i-learned",
+    "href": "projects/ai-competition.html#what-i-learned",
+    "title": "AI Competition Platform",
+    "section": "9. What I Learned",
+    "text": "9. What I Learned\n\nExperience operating multi-user GPU workloads\nHands-on understanding of the Kubernetes workload lifecycle\nExperience operating Kubeflow Notebooks\nThe importance of storage and resource isolation\nReal user workloads create resource patterns you don’t expect\nOperational policy and observability matter just as much as building the service itself"
+  },
+  {
+    "objectID": "projects/metaops.html",
+    "href": "projects/metaops.html",
+    "title": "MetaOps Cloud Console",
+    "section": "",
+    "text": "Role\nPlatform / Infrastructure Engineer\n\n\nDomain\nPrivate Cloud Management Console\n\n\nPeriod\n2023 – 2026\n\n\nStack\nOpenStack · CloudKitty · Heat · Prometheus · Ceilometer · Managed Grafana"
+  },
+  {
+    "objectID": "projects/metaops.html#overview",
+    "href": "projects/metaops.html#overview",
+    "title": "MetaOps Cloud Console",
+    "section": "1. Overview",
+    "text": "1. Overview\nA cloud management console that lets users manage OpenStack-based private cloud resources while giving operators control over them.\nKey features:\n\nVM (Compute) management\nVolume / Storage management\nNetwork (Topology, routers, security groups, Floating IP)\nOrchestration (Heat-based Stacks)\nResource request / admin approval\nBilling (CloudKitty integration)\nMonitoring (Prometheus / Ceilometer / Managed Grafana)\n\n\n\n\n\n\n\nNoteMy Role\n\n\n\nI was involved in developing and operating this console across several stages over about three years.\n\nDeveloped the MetaOps Console monitoring feature (2023.12–2024.06): integrated metrics collected from Prometheus and Ceilometer into the in-house console\nEnhanced the MetaOps Console (2024.07–2024.11, for a financial-sector client): added Korean-language support to the console sign-up flow, integrated the billing feature with CloudKitty\nDeveloped the resource request and allocation feature (2024.12–2025.03, for a financial-sector client): built the UI/API for resource allocation/requests and deployed the related OpenStack components\nAdded a backup feature to the MetaOps Console (2025.11–2026.01): added a resource backup feature using OpenStack Freezer"
+  },
+  {
+    "objectID": "projects/metaops.html#architecture",
+    "href": "projects/metaops.html#architecture",
+    "title": "MetaOps Cloud Console",
+    "section": "2. Architecture",
+    "text": "2. Architecture\n\n\n\n\n\nflowchart TD\n    U[User] --&gt; C[MetaOps Console]\n    C --&gt; B[Backend]\n    B --&gt; OS[OpenStack]\n    OS --&gt; COMP[Compute]\n    OS --&gt; STO[Storage]\n    OS --&gt; NET[Network]\n    B --&gt; CK[CloudKitty]\n    B --&gt; MON[Monitoring&lt;br/&gt;Prometheus / Ceilometer / Grafana]"
+  },
+  {
+    "objectID": "projects/metaops.html#openstack",
+    "href": "projects/metaops.html#openstack",
+    "title": "MetaOps Cloud Console",
+    "section": "3. OpenStack",
+    "text": "3. OpenStack\nThe main OpenStack components and concepts handled through the console:\n\nNova (Compute) — VM flavor selection, availability zones, instance lifecycle\nCinder (Storage) — volume creation/attachment, snapshots\nNeutron (Network) — private networks, routers, security groups, Floating IP\nKeystone — authentication / projects / quotas\nHeat — Stack-based orchestration\n\nThe GPU VM creation flow actually offered by the console is structured as follows:\nCreate private network\n   ↓\nCreate router and connect to external network\n   ↓\nCreate keypair\n   ↓\nCreate security group and set rules\n   ↓\nCreate VM instance (Base / Network / System Config)\n   ↓\nAllocate and attach Floating IP\n   ↓\nSSH in → verify NVIDIA driver\n   ↓\nCreate and attach volume → format/mount\nI designed each step so users could follow it in order through the console UI, and was responsible for the UI/API development and OpenStack component deployment this flow required.\n\n\n\n\n\n\nFigure 1: GPU VM creation — selecting a GPU flavor (A100/A30/T4/P100) and OS image in the Base Config step\n\n\n\n\n\n\n\n\n\nFigure 2: List of created GPU VM instances, with per-flavor status visible (Fixed IP masked)"
+  },
+  {
+    "objectID": "projects/metaops.html#resource-request-approval",
+    "href": "projects/metaops.html#resource-request-approval",
+    "title": "MetaOps Cloud Console",
+    "section": "4. Resource Request / Approval",
+    "text": "4. Resource Request / Approval\nRather than letting users create resources without limit, I designed and implemented a structure that manages cloud resources through a request-and-approval flow.\n\n\n\n\n\nflowchart TD\n    U[User] --&gt; RQ[Resource Request]\n    RQ --&gt; AR[Admin Review]\n    AR --&gt; AP[Approval]\n    AP --&gt; PR[OpenStack Resource Provisioning]\n\n\n\n\n\n\n\nDeveloped the UI and API for resource requests/approvals\nBuilt automated resource request/approval workflows using Adjutant and Mistral\nAutomated OpenStack resource provisioning for approved requests"
+  },
+  {
+    "objectID": "projects/metaops.html#cloud-billing-cloudkitty",
+    "href": "projects/metaops.html#cloud-billing-cloudkitty",
+    "title": "MetaOps Cloud Console",
+    "section": "5. Cloud Billing — CloudKitty",
+    "text": "5. Cloud Billing — CloudKitty\nIntegrated a CloudKitty-based cost calculation / billing structure into the console.\n\n\n\n\n\nflowchart TD\n    O[OpenStack Resource Usage] --&gt; CK[CloudKitty]\n    CK --&gt; OS[(OpenSearch)]\n    OS --&gt; RU[Rated Usage]\n    RU --&gt; BA[Billing API]\n    BA --&gt; MC[MetaOps Console]\n\n\n\n\n\n\nWhat this covers:\n\nAggregating resource usage per user / per project\nAdmin console features for prepaid credits: creation, top-up, deduction, expiry extension\nDetailed usage breakdown by Instance (GPU VM) / Volume\nThe user console’s Billing Dashboard (cost summary, per-service charges, usage trend charts)\n\nCloudKitty uses OpenSearch as its underlying data store for rated usage records — see Section 6 for how I used this directly to troubleshoot billing data issues.\n\n\n\n\n\n\nFigure 3: Admin console — Credit list (create/top-up/deduct/extend expiry). Amounts masked\n\n\n\n\n\n\n\n\n\nFigure 4: User console — Billing Dashboard, showing the cost breakdown by service and usage trends. Amounts masked"
+  },
+  {
+    "objectID": "projects/metaops.html#opensearch",
+    "href": "projects/metaops.html#opensearch",
+    "title": "MetaOps Cloud Console",
+    "section": "6. OpenSearch",
+    "text": "6. OpenSearch\nIn this project, OpenSearch served as CloudKitty’s data store for rated usage records.\n\nCloudKitty writes its rated usage/billing records into OpenSearch as its backing store\nWhen billing data showed incorrect or inconsistent values, I queried OpenSearch directly and corrected the underlying records to fix the billing figures\nThis was operational, ad-hoc data correction rather than a built console feature — a manual step I took when troubleshooting billing discrepancies\n\n\n\n\n\n\n\nTipTroubleshooting — Incorrect Billing Values\n\n\n\nProblem. Rated usage values shown in the Billing Dashboard occasionally didn’t match actual resource usage.\nInvestigation. Queried CloudKitty’s underlying OpenSearch index directly to inspect the raw rated-usage records behind the discrepancy.\nResolution. Corrected the affected records in OpenSearch so the billing figures reflected actual usage again.\n\n\n\n\n\n\n\n\nNote\n\n\n\nThis is a separate use of OpenSearch from the AIOps project (Section 6), where OpenSearch stores parsed Snort security logs. Here, OpenSearch is CloudKitty’s billing data store within MetaOps."
+  },
+  {
+    "objectID": "projects/metaops.html#monitoring",
+    "href": "projects/metaops.html#monitoring",
+    "title": "MetaOps Cloud Console",
+    "section": "7. Monitoring",
+    "text": "7. Monitoring\n\nIntegrated metrics collected from Prometheus and Ceilometer into the console to display VM/resource status\nProvided infrastructure monitoring dashboards via Managed Grafana"
+  },
+  {
+    "objectID": "projects/metaops.html#what-i-learned",
+    "href": "projects/metaops.html#what-i-learned",
+    "title": "MetaOps Cloud Console",
+    "section": "8. What I Learned",
+    "text": "8. What I Learned\n\nHands-on understanding of private cloud architecture and the OpenStack resource model\nThe cloud resource lifecycle (request → approval → provisioning → usage → billing)\nExperience integrating a CloudKitty-based billing system\nExperience building a monitoring pipeline (Prometheus/Ceilometer/Grafana)\nLong-term experience operating a platform that evolved across multiple stages (monitoring → console improvements → resource management → backup)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Platform / Infrastructure Engineer\nAmber worked at Devstack for about three years as a Cloud & AI Platform Engineer, building and operating platforms based on Kubernetes, Kubeflow, and OpenStack. Across services actually delivered to end users, she worked through multiple layers of the platform — backend development, authentication integration, GPU workload operations, cloud resource management, billing, monitoring, and troubleshooting. More recently, she has been extending her infrastructure operations experience into AIOps by connecting it with a LangGraph-based LLM Agent.\nShe starts an MSc in Data Science at the University of Bath in September 2026."
+  },
+  {
+    "objectID": "about.html#amber-lee",
+    "href": "about.html#amber-lee",
+    "title": "About",
+    "section": "",
+    "text": "Platform / Infrastructure Engineer\nAmber worked at Devstack for about three years as a Cloud & AI Platform Engineer, building and operating platforms based on Kubernetes, Kubeflow, and OpenStack. Across services actually delivered to end users, she worked through multiple layers of the platform — backend development, authentication integration, GPU workload operations, cloud resource management, billing, monitoring, and troubleshooting. More recently, she has been extending her infrastructure operations experience into AIOps by connecting it with a LangGraph-based LLM Agent.\nShe starts an MSc in Data Science at the University of Bath in September 2026."
+  },
+  {
+    "objectID": "about.html#professional-experience",
+    "href": "about.html#professional-experience",
+    "title": "About",
+    "section": "Professional Experience",
+    "text": "Professional Experience\nDevstack — Cloud & AI Platform Engineer (2023 – Present)\n\nDeveloped and enhanced an OpenStack-based cloud console (MetaOps Console)\nIntegrated monitoring (Prometheus) and billing (CloudKitty)\nBuilt automated resource-request workflows using Adjutant and Mistral\nDeveloped a backup UI based on OpenStack Freezer\nDeployed and operated services in Kubernetes environments\nBuilt and operated AI competition platforms (KAIST, Korea Astronomy and Space Science Institute)\nIntegrated JupyterHub and Kubeflow for AI environments\nDeveloped AI-security integration based on Snort + OpenWebUI\nContributed to proposals for government-funded AI projects, including CWE-based security data and AI platforms"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\n\nHongik University — B.Sc. Computer Engineering (2018 – 2024)\nHyperionDev — Data Science Bootcamp, UK (2023)\nUniversity of Bath — MSc Data Science (2026.09 – ), Global Excellence Scholarship recipient"
+  },
+  {
+    "objectID": "about.html#skills",
+    "href": "about.html#skills",
+    "title": "About",
+    "section": "Skills",
+    "text": "Skills\n\nCloud & DevOps: OpenStack, Kubernetes, Docker, AWS\nBackend / Frontend: FastAPI, Next.js, React\nAI Platforms: Kubeflow, JupyterHub, OpenWebUI\nMonitoring: Prometheus, CloudKitty\nSecurity: Keycloak (OIDC), Snort\nLanguages: Python, JavaScript, SQL"
+  },
+  {
+    "objectID": "about.html#contact",
+    "href": "about.html#contact",
+    "title": "About",
+    "section": "Contact",
+    "text": "Contact\n\nEmail: fmadkdl113@gmail.com\nGitHub: github.com/PinkPaca\nLinkedIn: linkedin.com/in/ahreum-lee-012a58249"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Amber Lee",
+    "section": "",
+    "text": "Platform / Infrastructure Engineer\nA record of building, operating, and troubleshooting across every layer of a platform — Kubernetes-based service deployment and operations, Kubeflow-based GPU Notebook environments, OpenStack-based private cloud management, Keycloak-based authentication integration, and LLM Agent-driven AIOps."
+  },
+  {
+    "objectID": "index.html#focus-areas",
+    "href": "index.html#focus-areas",
+    "title": "Amber Lee",
+    "section": "Focus Areas",
+    "text": "Focus Areas\n\nKubernetes-based service deployment and operations\nKubeflow-based GPU Notebook environment provisioning\nOpenStack-based private cloud operations\nCloud billing / monitoring\nKeycloak-based authentication integration\nLLM / Agent-based AIOps\nProduction operations and troubleshooting"
+  },
+  {
+    "objectID": "index.html#projects",
+    "href": "index.html#projects",
+    "title": "Amber Lee",
+    "section": "Projects",
+    "text": "Projects\n\n\nAI Competition Platform\nBuilt and operated a Kubernetes/Kubeflow-based GPU AI competition platform\nKubernetes Kubeflow GPU Keycloak FastAPI MariaDB\n\n\nMetaOps Cloud Console\nOpenStack-based private cloud management and operations platform\nOpenStack CloudKitty OpenSearch Monitoring\n\n\nAIOps Platform\nAIOps system connecting an LLM Agent to existing infrastructure platforms\nLangGraph OpenWebUI Keycloak LLM Agent"
+  },
+  {
+    "objectID": "projects/aiops.html",
+    "href": "projects/aiops.html",
+    "title": "AIOps Platform",
+    "section": "",
+    "text": "Role\nPlatform / Infrastructure Engineer\n\n\nDomain\nLLM Agent-based AIOps\n\n\nPeriod\n2024 – 2026 (ongoing)\n\n\nStack\nLangGraph · OpenWebUI · MCP (K8sGPT · Grafana · OpenSearch) · Keycloak · FastAPI · Slack · Snort · Logstash"
+  },
+  {
+    "objectID": "projects/aiops.html#overview",
+    "href": "projects/aiops.html#overview",
+    "title": "AIOps Platform",
+    "section": "1. Overview",
+    "text": "1. Overview\nAn AIOps system that connects infrastructure operations experience with an LLM-based interface, letting operators query infrastructure state and get support for operational tasks in natural language. This wasn’t a one-off project — it evolved across three stages.\nSlack-based single tool-calling bot (2024)\n        ↓\nRAG + OpenWebUI integration for security event analysis (2025)\n        ↓\nLangGraph-based multi-agent + multi-MCP-server integration (2026)\n\n\n\n\n\n\nNoteMy Role\n\n\n\n\nDeveloped and built a Slack-integrated K8s LLM bot (Azure Marketplace, 2024.03–2025.05)\nIntegrated an in-house security-vulnerability RAG with OpenWebUI and deployed it alongside a Snort/Logstash-based log pipeline (2025.05–2025.10)\nDesigned and implemented a LangGraph-based multi-agent architecture, integrated MCP servers (K8sGPT, Grafana, OpenSearch), built an MCP server management UI, developed a SQLite-based dynamic MCP registry, and applied OpenTelemetry/Jaeger tracing (2025– )\nDebugged and resolved infrastructure issues that came up at each stage"
+  },
+  {
+    "objectID": "projects/aiops.html#stage-1-slack-integrated-k8s-llm-bot",
+    "href": "projects/aiops.html#stage-1-slack-integrated-k8s-llm-bot",
+    "title": "AIOps Platform",
+    "section": "2. Stage 1 — Slack-integrated K8s LLM Bot",
+    "text": "2. Stage 1 — Slack-integrated K8s LLM Bot\nBuilt a conversational bot that, when mentioned in Slack, calls the K8sGPT tool to analyze Pod status and answer in natural language.\nExample — diagnosing CrashLoopBackOff\nUser (Slack): @k8srca A specific Pod is in CrashLoopBackOff. Explain what's going on.\n     ↓\nBot: Calls the K8sGPT tool to look up Pod status (waiting reason, lastState, restartCount, etc.)\n     ↓\nBot: Answers with a root-cause diagnosis based on what CrashLoopBackOff means and the container's restart history\nExample — diagnosing ContainerCreating\nUser (Slack): A specific Pod is stuck in ContainerCreating — which node is it on, and why?\n     ↓\nBot: Looks up which node the Pod is scheduled on, image pull status, and PersistentVolumeClaim binding\n     ↓\nBot: Lists possible causes (image pulling, volume mounting, init container delays) and\n     suggests next diagnostic steps such as running kubectl describe pod\n\n\n\n\n\n\nNote\n\n\n\n[TODO: when adding screenshots, replace real node hostnames, internal IPs, and internal Docker registry addresses with generalized examples]\n\n\n\n\n\n\n\n\nFigure 1: Example of the Slack bot (k8srca) diagnosing a CrashLoopBackOff Pod via the K8sGPT tool"
+  },
+  {
+    "objectID": "projects/aiops.html#stage-2-security-vulnerability-rag-openwebui-integration",
+    "href": "projects/aiops.html#stage-2-security-vulnerability-rag-openwebui-integration",
+    "title": "AIOps Platform",
+    "section": "3. Stage 2 — Security-Vulnerability RAG + OpenWebUI Integration",
+    "text": "3. Stage 2 — Security-Vulnerability RAG + OpenWebUI Integration\nExtended the existing K8s-focused bot with a pipeline that lets security events detected in network traffic be queried and analyzed in natural language.\n\n\n\n\n\n\nFigure 2: The security event analysis pipeline, from Snort-based traffic detection through to natural-language queries in OpenWebUI\n\n\n\n\nFlow\n\nTraffic monitoring and log generation — Snort captures packets on the network interface and writes text logs to alert_fast.txt\nData transport and refinement — Filebeat watches the log file and forwards it to Logstash, which uses a Grok filter to parse unstructured data (IP/Port/SID, etc.) into structured JSON and stores it in OpenSearch\nLLM analysis and decision-making — When a user submits a natural-language query in OpenWebUI, the LLM converts it into an OpenSearch query tool call, executes it, and presents the returned results as a natural-language report\n\nAt this stage I put into practice the interaction pattern where OpenWebUI’s LLM converts a natural-language query into a structured tool call and then explains the result back to the user — which became the foundation for the next stage’s LangGraph-based multi-agent structure."
+  },
+  {
+    "objectID": "projects/aiops.html#stage-3-langgraph-based-multi-agent-aiops-platform-current",
+    "href": "projects/aiops.html#stage-3-langgraph-based-multi-agent-aiops-platform-current",
+    "title": "AIOps Platform",
+    "section": "4. Stage 3 — LangGraph-based Multi-agent AIOps Platform (current)",
+    "text": "4. Stage 3 — LangGraph-based Multi-agent AIOps Platform (current)\nExtended the original single-bot structure into a LangGraph-based multi-agent architecture and integrated multiple MCP servers (K8sGPT, Grafana, OpenSearch).\n\nOverall Architecture\n\n\n\n\n\nflowchart TD\n    U[User] --&gt; OW[OpenWebUI]\n    OW --&gt; AUTH[Authentication]\n    AUTH --&gt; KC[Keycloak]\n    OW --&gt; BE[AIOps Backend]\n    BE --&gt; AG[LangGraph Agent]\n    AG --&gt; MCP1[MCP: K8sGPT]\n    AG --&gt; MCP2[MCP: Grafana]\n    AG --&gt; MCP3[MCP: OpenSearch]\n\n\n\n\n\n\n\n\nKeycloak Integration\n\nUser authentication via OpenWebUI’s integration with Keycloak\nDebugged backend authentication and the SSO logout flow\n\n\n\nOpenWebUI Integration\nIn this architecture, OpenWebUI acts as both the MCP Host and the MCP Client at the same time.\nUser → OpenWebUI (MCP Host/Client) → Authentication → AIOps Backend → Agent → MCP Server (Tool) → Response\n\nBuilt a UI inside OpenWebUI for registering/managing MCP servers (K8sGPT, Grafana, OpenSearch)\nDesigned two MCP integration patterns, Mode A and Mode B\nImplemented a SQLite-based dynamic MCP server registry with a FastAPI CRUD API\n\n\n\nSingle Agent Flow\nThe structure of the actual LangGraph Agent graph I implemented is shown below (rooted at aiops-agent).\n\n\n\n\n\n\nFigure 3: The aiops-agent graph as seen in OpenWebUI’s Agent workflow builder — the full flow from root through diagnosis, restart, stability recheck, and report generation (internal IPs in the left-hand chat list are masked)\n\n\n\nThe diagram below illustrates the same graph.\n\n\n\n\n\nflowchart TD\n    ROOT[\"aiops-agent (root)&lt;br/&gt;tools: k8sgpt, grafana\"] --&gt; STATE[\"k8s-state&lt;br/&gt;Diagnoses CrashLoopBackOff status via K8sGPT&lt;br/&gt;tools: grafana\"]\n    STATE --&gt; RESTART[\"restart (conditional)&lt;br/&gt;rule-based branching\"]\n    RESTART --&gt;|needs_restart = true| DO[\"do_restart&lt;br/&gt;restarts the target Pod&lt;br/&gt;tools: k8sgpt\"]\n    RESTART --&gt;|default| REPORT\n    DO --&gt; RECHECK[\"recheck_stability (loop, max×5)&lt;br/&gt;while stabilized\"]\n    RECHECK --&gt;|repeat| STATE\n    RECHECK --&gt;|exit| REPORT[\"generate_report&lt;br/&gt;synthesizes the full state&lt;br/&gt;tools: grafana\"]\n\n\n\n\n\n\n\nagent state: manages state fields shared across nodes, such as needs_restart and pod_name\ntool selection: applies per-agent tool filtering, exposing only the MCP tools (k8sgpt, grafana) each node needs\nconditional / loop nodes: combines a conditional node that decides, on a rule basis, whether a restart is needed, with a loop node that repeats up to 5 times until stabilized, to build an automated recovery flow\ntool execution & result: queries Pod status through the K8sGPT MCP and, if needed, restarts the Pod and rechecks stability\nfinal response: synthesizes the full state (whether a restart happened, the target Pod, etc.) into an investigation report\n\n\n\nExample Agent Request\n\"Check the current status of the GPU nodes.\"\n     ↓\nAgent → Tool Selection → Infrastructure/Monitoring MCP (K8sGPT/Grafana) → Result → Agent Analysis → User Response"
+  },
+  {
+    "objectID": "projects/aiops.html#challenges",
+    "href": "projects/aiops.html#challenges",
+    "title": "AIOps Platform",
+    "section": "5. Challenges",
+    "text": "5. Challenges\n\nDebugged Keycloak / OpenWebUI authentication integration and the SSO logout flow\nDebugged a goroutine hang caused by a K8sGPT image versioning issue\nResolved a DNS boundary issue between Docker and Kubernetes\nMigrated a SQLite schema\nMigrated the Grafana MCP transport from SSE to Streamable HTTP\nManaged agent state and designed conditional/loop nodes\nImplemented tool calling and per-agent tool filtering across multiple MCP servers"
+  },
+  {
+    "objectID": "projects/aiops.html#what-i-learned",
+    "href": "projects/aiops.html#what-i-learned",
+    "title": "AIOps Platform",
+    "section": "6. What I Learned",
+    "text": "6. What I Learned\n\nExperience gradually evolving a Slack-based single tool-calling bot into a LangGraph-based multi-agent structure\nExperience designing an architecture where OpenWebUI serves as an MCP Host/Client\nExperience connecting a log pipeline (Snort → Filebeat → Logstash → OpenSearch) with LLM querying\nExperience designing a way to integrate multiple MCP servers into a manageable form (dynamic registry, management UI)\nHow directly existing infrastructure operations knowledge translates into LLM Agent design"
+  }
+]
