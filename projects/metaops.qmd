@@ -97,19 +97,49 @@ List of created GPU VM instances, with per-flavor status visible (Fixed IP maske
 
 ## 4. Resource Request / Approval
 
-Rather than letting users create resources without limit, I designed and implemented a structure that manages cloud resources through a request-and-approval flow.
+Rather than letting users create resources without limit, I designed and implemented a structure that manages cloud resources through a request-and-approval flow, built on **Adjutant** and **Mistral**.
+
+### Architecture
+
+MetaOps itself is deployed only in a single region (Region One) as the entry point for both users and admins, while Adjutant and Mistral are each deployed per-region so requests can be routed to and executed in whichever region the user selects.
 
 ```{mermaid}
 flowchart TD
-    U[User] --> RQ[Resource Request]
-    RQ --> AR[Admin Review]
-    AR --> AP[Approval]
-    AP --> PR[OpenStack Resource Provisioning]
+    U[User / Admin] --> MC["MetaOps Console (Region One only)"]
+    MC --> RS[Select Region]
+    RS --> AJ["Adjutant (per region)<br/>stores request info & status as a Task"]
+    AJ --> MI["Mistral (per region)<br/>executes the request"]
+    MI --> OS[OpenStack Resource Provisioning]
 ```
 
-- Developed the UI and API for resource requests/approvals
-- Built automated resource request/approval workflows using **Adjutant** and **Mistral**
-- Automated OpenStack resource provisioning for approved requests
+- **MetaOps** — the UI where users and admins submit and process resource requests
+- **Adjutant** — stores the resource request's information and status using its Task feature
+- **Mistral** — executes the resource request
+
+### Scenario — Instance Creation Request
+
+```{mermaid}
+flowchart TD
+    S1["User: open Resource Request menu → Create Resource Request"] --> S2["User: select 'Create Instance' type,<br/>set name / flavor / image → Confirm"]
+    S2 --> S3["Admin: open Resource Request menu in the admin console → Update the Create Instance request"]
+    S3 --> S4["Admin: select Network and Security Group → Approve"]
+    S4 --> S5["If executed without error: status moves to Approved → Complete"]
+```
+
+### Scenario — Instance Deletion
+
+```{mermaid}
+flowchart TD
+    D1["User: select the instance to delete in the Resource Request menu → create a deletion request"] --> D2["Admin: approve the instance deletion request in the Resource Request menu"]
+    D2 --> D3["If executed without error: status moves to Approved → Complete"]
+```
+
+### Rejection & Error Handling
+
+- Any request can be cancelled by an admin at any time
+- If an error occurs while executing a request, the error detail is visible in the **Action Notes** section of the request's detail page
+- Once the underlying cause is resolved, re-approving the request runs it again
+- If the same request errors out again after being re-approved, it is automatically cancelled
 
 ## 5. Cloud Billing — CloudKitty
 
@@ -178,3 +208,4 @@ This is a separate use of OpenSearch from the AIOps project (Section 6), where O
 - Experience integrating a CloudKitty-based billing system
 - Experience building a monitoring pipeline (Prometheus/Ceilometer/Grafana)
 - Long-term experience operating a platform that evolved across multiple stages (monitoring → console improvements → resource management → backup)
+
