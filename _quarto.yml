@@ -1,9 +1,8 @@
 project:
   type: website
-  output-dir: docs
 
 website:
-  title: "Amber Lee"
+  title: "Ahreum (Amber) Lee"
   description: "Platform / Infrastructure Engineer — Engineering Portfolio"
   navbar:
     left:
