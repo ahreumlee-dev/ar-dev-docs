@@ -269,7 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 → Automatic scoring
 → Check leaderboard</code></pre>
 <ul>
-<li>~30 teams advanced to the final round</li>
+<li>134 participants across 92 teams entered the competition</li>
+<li>33 teams (63 participants) advanced to the final round</li>
 <li>One NVIDIA A100 40GB GPU allocated per team</li>
 <li>Kubernetes / Kubeflow Notebook-based per-team work environment</li>
 <li>Automated submission / scoring system</li>
@@ -685,7 +686,7 @@ Note
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/ahreumlee-dev\.github\.io\/ar-dev-docs\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
