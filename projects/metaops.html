@@ -151,7 +151,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. Overview</a></li>
   <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">2. Architecture</a></li>
   <li><a href="#openstack" id="toc-openstack" class="nav-link" data-scroll-target="#openstack">3. OpenStack</a></li>
-  <li><a href="#resource-request-approval" id="toc-resource-request-approval" class="nav-link" data-scroll-target="#resource-request-approval">4. Resource Request / Approval</a></li>
+  <li><a href="#resource-request-approval" id="toc-resource-request-approval" class="nav-link" data-scroll-target="#resource-request-approval">4. Resource Request / Approval</a>
+  <ul class="collapse">
+  <li><a href="#architecture-1" id="toc-architecture-1" class="nav-link" data-scroll-target="#architecture-1">Architecture</a></li>
+  <li><a href="#scenario-instance-creation-request" id="toc-scenario-instance-creation-request" class="nav-link" data-scroll-target="#scenario-instance-creation-request">Scenario — Instance Creation Request</a></li>
+  <li><a href="#scenario-instance-deletion" id="toc-scenario-instance-deletion" class="nav-link" data-scroll-target="#scenario-instance-deletion">Scenario — Instance Deletion</a></li>
+  <li><a href="#rejection-error-handling" id="toc-rejection-error-handling" class="nav-link" data-scroll-target="#rejection-error-handling">Rejection &amp; Error Handling</a></li>
+  </ul></li>
   <li><a href="#cloud-billing-cloudkitty" id="toc-cloud-billing-cloudkitty" class="nav-link" data-scroll-target="#cloud-billing-cloudkitty">5. Cloud Billing — CloudKitty</a></li>
   <li><a href="#opensearch" id="toc-opensearch" class="nav-link" data-scroll-target="#opensearch">6. OpenSearch</a></li>
   <li><a href="#monitoring" id="toc-monitoring" class="nav-link" data-scroll-target="#monitoring">7. Monitoring</a></li>
@@ -314,17 +320,21 @@ Figure&nbsp;2: List of created GPU VM instances, with per-flavor status visible 
 </section>
 <section id="resource-request-approval" class="level2">
 <h2 class="anchored" data-anchor-id="resource-request-approval">4. Resource Request / Approval</h2>
-<p>Rather than letting users create resources without limit, I designed and implemented a structure that manages cloud resources through a request-and-approval flow.</p>
+<p>Rather than letting users create resources without limit, I designed and implemented a structure that manages cloud resources through a request-and-approval flow, built on <strong>Adjutant</strong> and <strong>Mistral</strong>.</p>
+<section id="architecture-1" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-1">Architecture</h3>
+<p>MetaOps itself is deployed only in a single region (Region One) as the entry point for both users and admins, while Adjutant and Mistral are each deployed per-region so requests can be routed to and executed in whichever region the user selects.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TD
-    U[User] --&gt; RQ[Resource Request]
-    RQ --&gt; AR[Admin Review]
-    AR --&gt; AP[Approval]
-    AP --&gt; PR[OpenStack Resource Provisioning]
+    U[User / Admin] --&gt; MC["MetaOps Console (Region One only)"]
+    MC --&gt; RS[Select Region]
+    RS --&gt; AJ["Adjutant (per region)&lt;br/&gt;stores request info &amp; status as a Task"]
+    AJ --&gt; MI["Mistral (per region)&lt;br/&gt;executes the request"]
+    MI --&gt; OS[OpenStack Resource Provisioning]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -332,10 +342,56 @@ Figure&nbsp;2: List of created GPU VM instances, with per-flavor status visible 
 </div>
 </div>
 <ul>
-<li>Developed the UI and API for resource requests/approvals</li>
-<li>Built automated resource request/approval workflows using <strong>Adjutant</strong> and <strong>Mistral</strong></li>
-<li>Automated OpenStack resource provisioning for approved requests</li>
+<li><strong>MetaOps</strong> — the UI where users and admins submit and process resource requests</li>
+<li><strong>Adjutant</strong> — stores the resource request’s information and status using its Task feature</li>
+<li><strong>Mistral</strong> — executes the resource request</li>
 </ul>
+</section>
+<section id="scenario-instance-creation-request" class="level3">
+<h3 class="anchored" data-anchor-id="scenario-instance-creation-request">Scenario — Instance Creation Request</h3>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    S1["User: open Resource Request menu → Create Resource Request"] --&gt; S2["User: select 'Create Instance' type,&lt;br/&gt;set name / flavor / image → Confirm"]
+    S2 --&gt; S3["Admin: open Resource Request menu in the admin console → Update the Create Instance request"]
+    S3 --&gt; S4["Admin: select Network and Security Group → Approve"]
+    S4 --&gt; S5["If executed without error: status moves to Approved → Complete"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="scenario-instance-deletion" class="level3">
+<h3 class="anchored" data-anchor-id="scenario-instance-deletion">Scenario — Instance Deletion</h3>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    D1["User: select the instance to delete in the Resource Request menu → create a deletion request"] --&gt; D2["Admin: approve the instance deletion request in the Resource Request menu"]
+    D2 --&gt; D3["If executed without error: status moves to Approved → Complete"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="rejection-error-handling" class="level3">
+<h3 class="anchored" data-anchor-id="rejection-error-handling">Rejection &amp; Error Handling</h3>
+<ul>
+<li>Any request can be cancelled by an admin at any time</li>
+<li>If an error occurs while executing a request, the error detail is visible in the <strong>Action Notes</strong> section of the request’s detail page</li>
+<li>Once the underlying cause is resolved, re-approving the request runs it again</li>
+<li>If the same request errors out again after being re-approved, it is automatically cancelled</li>
+</ul>
+</section>
 </section>
 <section id="cloud-billing-cloudkitty" class="level2">
 <h2 class="anchored" data-anchor-id="cloud-billing-cloudkitty">5. Cloud Billing — CloudKitty</h2>
