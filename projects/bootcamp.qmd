@@ -1,0 +1,93 @@
+---
+title: "Data Science Bootcamp"
+subtitle: "HyperionDev (UK) — Python, Data Analysis, Machine Learning, and NLP Foundations"
+toc: true
+---
+
+::: {.project-meta}
+| | |
+|---|---|
+| **Provider** | HyperionDev (UK) |
+| **Period** | 2023 |
+| **Topics** | Python · pandas · seaborn / Matplotlib · scikit-learn · spaCy · Django |
+| **Code** | [github.com/ahreumlee-dev/Boot-camp-tasks](https://github.com/ahreumlee-dev/Boot-camp-tasks) |
+:::
+
+## 1. Overview
+
+In 2023 I completed HyperionDev's Data Science Bootcamp, a structured introduction to data science. It covered the path from Python fundamentals to exploratory analysis, a first regression model, and natural language processing.
+
+All task code is in the repository linked above. This page summarises what each part covered.
+
+## 2. Python Fundamentals
+
+Short programs covering control flow, functions, string handling, file I/O, and 2D lists:
+
+- **Finance calculators** — investment (simple / compound interest) and home-loan repayment calculators
+- **Holiday cost calculator** — functions composing hotel, flight, and car-rental costs
+- **Minesweeper counter** — computes the number of adjacent mines for each cell of a grid, using padded edges and 8-direction offsets
+- **String and file tasks** — text manipulation, regex basics, and reading and writing files
+
+## 3. Data Analysis with pandas
+
+Exploratory analysis on tabular datasets with pandas:
+
+- Grouped aggregations (e.g. average income by demographic group; average balance for married vs single customers)
+- Filtering, selecting, and summarising columns (min/max, counts by category)
+- Working with built-in datasets such as *Iris* through seaborn
+
+```python
+df = pd.read_csv("balance.txt", delim_whitespace=True)
+
+df.groupby("Ethnicity")["Income"].mean()
+df[df.Married == "Yes"]["Balance"].mean()
+```
+
+## 4. First Machine Learning Model — Linear Regression
+
+Using a medical insurance dataset, I explored the relationship between **age and insurance charges**, then fitted a simple linear regression with scikit-learn and plotted the best-fit line over the data.
+
+```python
+lin_model = LinearRegression()
+X = df["age"].values.reshape(-1, 1)
+y = df["charges"].values
+
+lin_model.fit(X, y)
+y_pred = lin_model.predict(X)
+
+sns.scatterplot(data=df, x="age", y="charges")
+plt.plot(X, y_pred, color="r")
+```
+
+## 5. Natural Language Processing with spaCy
+
+### Semantic similarity
+
+I compared word similarities using two spaCy English models: `en_core_web_md` (which includes word vectors) and `en_core_web_sm` (which does not).
+
+| Pair | `md` model | `sm` model |
+|---|---|---|
+| cat – monkey | 0.59 | 0.68 |
+| monkey – banana | 0.40 | 0.73 |
+| banana – cat | 0.22 | 0.68 |
+| song – singer | 0.62 | 0.79 |
+| singer – parrot | 0.03 | 0.23 |
+
+::: {.callout-tip}
+## Takeaway
+The `md` model ranks pairs the way a person would: *cat–monkey* (both animals) scores well above *banana–cat*. The `sm` model has no real word vectors, so its similarities are much flatter and less meaningful. *banana–cat* scores almost the same as *cat–monkey*. The model you choose matters as much as the method you use.
+:::
+
+### Garden-path sentences
+
+I ran tokenisation and named-entity recognition over *garden-path* sentences such as "The cotton clothing is made of grows in Mississippi". These sentences are hard for people to parse at first reading, and the task tested how a statistical parser handles them.
+
+## 6. Web Basics
+
+- An introduction to **Django** project structure (project setup, settings, URL routing, admin)
+
+## 7. What It Gave Me
+
+- A first, hands-on foundation in the Python data stack (pandas, seaborn, scikit-learn)
+- A habit of checking whether a result *makes sense*, not just whether the code runs, as in the spaCy model comparison
+- The starting point for moving from platform engineering toward data science, which I am now continuing with an MSc in Data Science at the University of Bath

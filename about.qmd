@@ -9,7 +9,7 @@ Platform / Infrastructure Engineer
 
 Amber worked at Devstack for about three years as a Cloud & AI Platform Engineer, building and operating platforms based on Kubernetes, Kubeflow, and OpenStack. Across services actually delivered to end users, she worked through multiple layers of the platform — backend development, authentication integration, GPU workload operations, cloud resource management, billing, monitoring, and troubleshooting. More recently, she has been extending her infrastructure operations experience into AIOps by connecting it with a LangGraph-based LLM Agent.
 
-She starts an MSc in Data Science at the University of Bath in September 2026.
+She is now pursuing an MSc in Data Science at the University of Bath (from September 2026).
 
 ## Professional Experience
 
@@ -27,8 +27,8 @@ She starts an MSc in Data Science at the University of Bath in September 2026.
 
 ## Education
 
-- **Hongik University** — B.Sc. Computer Engineering (2018 – 2024)
-- **HyperionDev** — Data Science Bootcamp, UK (2023)
+- **Hongik University** — B.Sc. Computer Engineering (2018 – 2024); capstone project: [Tag A Trip](projects/tag-a-trip.qmd)
+- **HyperionDev** — [Data Science Bootcamp](projects/bootcamp.qmd), UK (2023)
 - **University of Bath** — MSc Data Science (2026.09 – ), Global Excellence Scholarship recipient
 
 ## Skills
@@ -43,5 +43,5 @@ She starts an MSc in Data Science at the University of Bath in September 2026.
 ## Contact
 
 - **Email**: fmadkdl113@gmail.com
-- **GitHub**: [github.com/PinkPaca](https://github.com/PinkPaca)
-- **LinkedIn**: [linkedin.com/in/ahreum-lee-012a58249](https://www.linkedin.com/in/ahreum-lee-012a58249/)
+- **GitHub**: [github.com/ahreumlee-dev](https://github.com/ahreumlee-dev)
+- **LinkedIn**: [linkedin.com/in/ahreum-lee-012a58249](https://www.linkedin.com/in/ahreum-lee-012a58249)

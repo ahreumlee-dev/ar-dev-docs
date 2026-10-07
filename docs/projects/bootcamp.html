@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MetaOps Cloud Console – Ahreum (Amber) Lee</title>
+<title>Data Science Bootcamp – Ahreum (Amber) Lee</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -73,10 +108,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<meta name="mermaid-theme" content="neutral">
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -165,19 +196,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. Overview</a></li>
-  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">2. Architecture</a></li>
-  <li><a href="#openstack" id="toc-openstack" class="nav-link" data-scroll-target="#openstack">3. OpenStack</a></li>
-  <li><a href="#resource-request-approval" id="toc-resource-request-approval" class="nav-link" data-scroll-target="#resource-request-approval">4. Resource Request / Approval</a>
+  <li><a href="#python-fundamentals" id="toc-python-fundamentals" class="nav-link" data-scroll-target="#python-fundamentals">2. Python Fundamentals</a></li>
+  <li><a href="#data-analysis-with-pandas" id="toc-data-analysis-with-pandas" class="nav-link" data-scroll-target="#data-analysis-with-pandas">3. Data Analysis with pandas</a></li>
+  <li><a href="#first-machine-learning-model-linear-regression" id="toc-first-machine-learning-model-linear-regression" class="nav-link" data-scroll-target="#first-machine-learning-model-linear-regression">4. First Machine Learning Model — Linear Regression</a></li>
+  <li><a href="#natural-language-processing-with-spacy" id="toc-natural-language-processing-with-spacy" class="nav-link" data-scroll-target="#natural-language-processing-with-spacy">5. Natural Language Processing with spaCy</a>
   <ul class="collapse">
-  <li><a href="#architecture-1" id="toc-architecture-1" class="nav-link" data-scroll-target="#architecture-1">Architecture</a></li>
-  <li><a href="#scenario-instance-creation-request" id="toc-scenario-instance-creation-request" class="nav-link" data-scroll-target="#scenario-instance-creation-request">Scenario — Instance Creation Request</a></li>
-  <li><a href="#scenario-instance-deletion" id="toc-scenario-instance-deletion" class="nav-link" data-scroll-target="#scenario-instance-deletion">Scenario — Instance Deletion</a></li>
-  <li><a href="#rejection-error-handling" id="toc-rejection-error-handling" class="nav-link" data-scroll-target="#rejection-error-handling">Rejection &amp; Error Handling</a></li>
+  <li><a href="#semantic-similarity" id="toc-semantic-similarity" class="nav-link" data-scroll-target="#semantic-similarity">Semantic similarity</a></li>
+  <li><a href="#garden-path-sentences" id="toc-garden-path-sentences" class="nav-link" data-scroll-target="#garden-path-sentences">Garden-path sentences</a></li>
   </ul></li>
-  <li><a href="#cloud-billing-cloudkitty" id="toc-cloud-billing-cloudkitty" class="nav-link" data-scroll-target="#cloud-billing-cloudkitty">5. Cloud Billing — CloudKitty</a></li>
-  <li><a href="#opensearch" id="toc-opensearch" class="nav-link" data-scroll-target="#opensearch">6. OpenSearch</a></li>
-  <li><a href="#monitoring" id="toc-monitoring" class="nav-link" data-scroll-target="#monitoring">7. Monitoring</a></li>
-  <li><a href="#what-i-learned" id="toc-what-i-learned" class="nav-link" data-scroll-target="#what-i-learned">8. What I Learned</a></li>
+  <li><a href="#web-basics" id="toc-web-basics" class="nav-link" data-scroll-target="#web-basics">6. Web Basics</a></li>
+  <li><a href="#what-it-gave-me" id="toc-what-it-gave-me" class="nav-link" data-scroll-target="#what-it-gave-me">7. What It Gave Me</a></li>
   </ul>
 </nav>
     </div>
@@ -186,8 +214,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MetaOps Cloud Console</h1>
-<p class="subtitle lead">OpenStack-based Private Cloud Management and Operations Platform</p>
+<h1 class="title">Data Science Bootcamp</h1>
+<p class="subtitle lead">HyperionDev (UK) — Python, Data Analysis, Machine Learning, and NLP Foundations</p>
 </div>
 
 
@@ -206,310 +234,139 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="project-meta">
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <tbody>
 <tr class="odd">
-<td><strong>Role</strong></td>
-<td>Platform / Infrastructure Engineer</td>
+<td><strong>Provider</strong></td>
+<td>HyperionDev (UK)</td>
 </tr>
 <tr class="even">
-<td><strong>Domain</strong></td>
-<td>Private Cloud Management Console</td>
+<td><strong>Period</strong></td>
+<td>2023</td>
 </tr>
 <tr class="odd">
-<td><strong>Period</strong></td>
-<td>2023 – 2026</td>
+<td><strong>Topics</strong></td>
+<td>Python · pandas · seaborn / Matplotlib · scikit-learn · spaCy · Django</td>
 </tr>
 <tr class="even">
-<td><strong>Stack</strong></td>
-<td>OpenStack · CloudKitty · Heat · Prometheus · Ceilometer · Managed Grafana</td>
+<td><strong>Code</strong></td>
+<td><a href="https://github.com/ahreumlee-dev/Boot-camp-tasks">github.com/ahreumlee-dev/Boot-camp-tasks</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">1. Overview</h2>
-<p>A cloud management console that lets users manage OpenStack-based private cloud resources while giving operators control over them.</p>
-<p>Key features:</p>
-<ul>
-<li>VM (Compute) management</li>
-<li>Volume / Storage management</li>
-<li>Network (Topology, routers, security groups, Floating IP)</li>
-<li>Orchestration (Heat-based Stacks)</li>
-<li>Resource request / admin approval</li>
-<li>Billing (CloudKitty integration)</li>
-<li>Monitoring (Prometheus / Ceilometer / Managed Grafana)</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>My Role
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>I was involved in developing and operating this console across several stages over about three years.</p>
-<ul>
-<li>Developed the MetaOps Console <strong>monitoring feature</strong> (2023.12–2024.06): integrated metrics collected from Prometheus and Ceilometer into the in-house console</li>
-<li><strong>Enhanced</strong> the MetaOps Console (2024.07–2024.11, for a financial-sector client): added Korean-language support to the console sign-up flow, integrated the billing feature with CloudKitty</li>
-<li>Developed the <strong>resource request and allocation</strong> feature (2024.12–2025.03, for a financial-sector client): built the UI/API for resource allocation/requests and deployed the related OpenStack components</li>
-<li>Added a <strong>backup feature</strong> to the MetaOps Console (2025.11–2026.01): added a resource backup feature using OpenStack Freezer</li>
-</ul>
-</div>
-</div>
+<p>In 2023 I completed HyperionDev’s Data Science Bootcamp, a structured introduction to data science. It covered the path from Python fundamentals to exploratory analysis, a first regression model, and natural language processing.</p>
+<p>All task code is in the repository linked above. This page summarises what each part covered.</p>
 </section>
-<section id="architecture" class="level2">
-<h2 class="anchored" data-anchor-id="architecture">2. Architecture</h2>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    U[User] --&gt; C[MetaOps Console]
-    C --&gt; B[Backend]
-    B --&gt; OS[OpenStack]
-    OS --&gt; COMP[Compute]
-    OS --&gt; STO[Storage]
-    OS --&gt; NET[Network]
-    B --&gt; CK[CloudKitty]
-    B --&gt; MON[Monitoring&lt;br/&gt;Prometheus / Ceilometer / Grafana]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="openstack" class="level2">
-<h2 class="anchored" data-anchor-id="openstack">3. OpenStack</h2>
-<p>The main OpenStack components and concepts handled through the console:</p>
+<section id="python-fundamentals" class="level2">
+<h2 class="anchored" data-anchor-id="python-fundamentals">2. Python Fundamentals</h2>
+<p>Short programs covering control flow, functions, string handling, file I/O, and 2D lists:</p>
 <ul>
-<li><strong>Nova</strong> (Compute) — VM flavor selection, availability zones, instance lifecycle</li>
-<li><strong>Cinder</strong> (Storage) — volume creation/attachment, snapshots</li>
-<li><strong>Neutron</strong> (Network) — private networks, routers, security groups, Floating IP</li>
-<li><strong>Keystone</strong> — authentication / projects / quotas</li>
-<li><strong>Heat</strong> — Stack-based orchestration</li>
-</ul>
-<p>The GPU VM creation flow actually offered by the console is structured as follows:</p>
-<pre class="text"><code>Create private network
-   ↓
-Create router and connect to external network
-   ↓
-Create keypair
-   ↓
-Create security group and set rules
-   ↓
-Create VM instance (Base / Network / System Config)
-   ↓
-Allocate and attach Floating IP
-   ↓
-SSH in → verify NVIDIA driver
-   ↓
-Create and attach volume → format/mount</code></pre>
-<p>I designed each step so users could follow it in order through the console UI, and was responsible for the UI/API development and OpenStack component deployment this flow required.</p>
-<div id="fig-gpu-vm-create" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gpu-vm-create-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../images/metaops/gpu-vm-create.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gpu-vm-create-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: GPU VM creation — selecting a GPU flavor (A100/A30/T4/P100) and OS image in the Base Config step
-</figcaption>
-</figure>
-</div>
-<div id="fig-gpu-vm-instances" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gpu-vm-instances-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../images/metaops/gpu-vm-instances.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gpu-vm-instances-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: List of created GPU VM instances, with per-flavor status visible (Fixed IP masked)
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="resource-request-approval" class="level2">
-<h2 class="anchored" data-anchor-id="resource-request-approval">4. Resource Request / Approval</h2>
-<p>Rather than letting users create resources without limit, I designed and implemented a structure that manages cloud resources through a request-and-approval flow, built on <strong>Adjutant</strong> and <strong>Mistral</strong>.</p>
-<section id="architecture-1" class="level3">
-<h3 class="anchored" data-anchor-id="architecture-1">Architecture</h3>
-<p>MetaOps itself is deployed only in a single region (Region One) as the entry point for both users and admins, while Adjutant and Mistral are each deployed per-region so requests can be routed to and executed in whichever region the user selects.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    U[User / Admin] --&gt; MC["MetaOps Console (Region One only)"]
-    MC --&gt; RS[Select Region]
-    RS --&gt; AJ["Adjutant (per region)&lt;br/&gt;stores request info &amp; status as a Task"]
-    AJ --&gt; MI["Mistral (per region)&lt;br/&gt;executes the request"]
-    MI --&gt; OS[OpenStack Resource Provisioning]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ul>
-<li><strong>MetaOps</strong> — the UI where users and admins submit and process resource requests</li>
-<li><strong>Adjutant</strong> — stores the resource request’s information and status using its Task feature</li>
-<li><strong>Mistral</strong> — executes the resource request</li>
+<li><strong>Finance calculators</strong> — investment (simple / compound interest) and home-loan repayment calculators</li>
+<li><strong>Holiday cost calculator</strong> — functions composing hotel, flight, and car-rental costs</li>
+<li><strong>Minesweeper counter</strong> — computes the number of adjacent mines for each cell of a grid, using padded edges and 8-direction offsets</li>
+<li><strong>String and file tasks</strong> — text manipulation, regex basics, and reading and writing files</li>
 </ul>
 </section>
-<section id="scenario-instance-creation-request" class="level3">
-<h3 class="anchored" data-anchor-id="scenario-instance-creation-request">Scenario — Instance Creation Request</h3>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    S1["User: open Resource Request menu → Create Resource Request"] --&gt; S2["User: select 'Create Instance' type,&lt;br/&gt;set name / flavor / image → Confirm"]
-    S2 --&gt; S3["Admin: open Resource Request menu in the admin console → Update the Create Instance request"]
-    S3 --&gt; S4["Admin: select Network and Security Group → Approve"]
-    S4 --&gt; S5["If executed without error: status moves to Approved → Complete"]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="scenario-instance-deletion" class="level3">
-<h3 class="anchored" data-anchor-id="scenario-instance-deletion">Scenario — Instance Deletion</h3>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    D1["User: select the instance to delete in the Resource Request menu → create a deletion request"] --&gt; D2["Admin: approve the instance deletion request in the Resource Request menu"]
-    D2 --&gt; D3["If executed without error: status moves to Approved → Complete"]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="rejection-error-handling" class="level3">
-<h3 class="anchored" data-anchor-id="rejection-error-handling">Rejection &amp; Error Handling</h3>
+<section id="data-analysis-with-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis-with-pandas">3. Data Analysis with pandas</h2>
+<p>Exploratory analysis on tabular datasets with pandas:</p>
 <ul>
-<li>Any request can be cancelled by an admin at any time</li>
-<li>If an error occurs while executing a request, the error detail is visible in the <strong>Action Notes</strong> section of the request’s detail page</li>
-<li>Once the underlying cause is resolved, re-approving the request runs it again</li>
-<li>If the same request errors out again after being re-approved, it is automatically cancelled</li>
+<li>Grouped aggregations (e.g.&nbsp;average income by demographic group; average balance for married vs single customers)</li>
+<li>Filtering, selecting, and summarising columns (min/max, counts by category)</li>
+<li>Working with built-in datasets such as <em>Iris</em> through seaborn</li>
 </ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"balance.txt"</span>, delim_whitespace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"Ethnicity"</span>)[<span class="st">"Income"</span>].mean()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df[df.Married <span class="op">==</span> <span class="st">"Yes"</span>][<span class="st">"Balance"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="first-machine-learning-model-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="first-machine-learning-model-linear-regression">4. First Machine Learning Model — Linear Regression</h2>
+<p>Using a medical insurance dataset, I explored the relationship between <strong>age and insurance charges</strong>, then fitted a simple linear regression with scikit-learn and plotted the best-fit line over the data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lin_model <span class="op">=</span> LinearRegression()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[<span class="st">"age"</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"charges"</span>].values</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>lin_model.fit(X, y)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> lin_model.predict(X)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"age"</span>, y<span class="op">=</span><span class="st">"charges"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.plot(X, y_pred, color<span class="op">=</span><span class="st">"r"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="cloud-billing-cloudkitty" class="level2">
-<h2 class="anchored" data-anchor-id="cloud-billing-cloudkitty">5. Cloud Billing — CloudKitty</h2>
-<p>Integrated a CloudKitty-based cost calculation / billing structure into the console.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    O[OpenStack Resource Usage] --&gt; CK[CloudKitty]
-    CK --&gt; OS[(OpenSearch)]
-    OS --&gt; RU[Rated Usage]
-    RU --&gt; BA[Billing API]
-    BA --&gt; MC[MetaOps Console]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>What this covers:</p>
-<ul>
-<li>Aggregating resource usage per user / per project</li>
-<li>Admin console features for prepaid credits: creation, top-up, deduction, expiry extension</li>
-<li>Detailed usage breakdown by Instance (GPU VM) / Volume</li>
-<li>The user console’s Billing Dashboard (cost summary, per-service charges, usage trend charts)</li>
-</ul>
-<p>CloudKitty uses OpenSearch as its underlying data store for rated usage records — see <a href="#opensearch">Section 6</a> for how I used this directly to troubleshoot billing data issues.</p>
-<div id="fig-billing-credit-list" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-billing-credit-list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../images/metaops/billing-credit-list.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-billing-credit-list-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Admin console — Credit list (create/top-up/deduct/extend expiry). Amounts masked
-</figcaption>
-</figure>
-</div>
-<div id="fig-billing-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-billing-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../images/metaops/billing-dashboard.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-billing-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: User console — Billing Dashboard, showing the cost breakdown by service and usage trends. Amounts masked
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="opensearch" class="level2">
-<h2 class="anchored" data-anchor-id="opensearch">6. OpenSearch</h2>
-<p>In this project, OpenSearch served as <strong>CloudKitty’s data store</strong> for rated usage records.</p>
-<ul>
-<li>CloudKitty writes its rated usage/billing records into OpenSearch as its backing store</li>
-<li>When billing data showed incorrect or inconsistent values, I queried OpenSearch directly and corrected the underlying records to fix the billing figures</li>
-<li>This was operational, ad-hoc data correction rather than a built console feature — a manual step I took when troubleshooting billing discrepancies</li>
-</ul>
+<section id="natural-language-processing-with-spacy" class="level2">
+<h2 class="anchored" data-anchor-id="natural-language-processing-with-spacy">5. Natural Language Processing with spaCy</h2>
+<section id="semantic-similarity" class="level3">
+<h3 class="anchored" data-anchor-id="semantic-similarity">Semantic similarity</h3>
+<p>I compared word similarities using two spaCy English models: <code>en_core_web_md</code> (which includes word vectors) and <code>en_core_web_sm</code> (which does not).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Pair</th>
+<th><code>md</code> model</th>
+<th><code>sm</code> model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>cat – monkey</td>
+<td>0.59</td>
+<td>0.68</td>
+</tr>
+<tr class="even">
+<td>monkey – banana</td>
+<td>0.40</td>
+<td>0.73</td>
+</tr>
+<tr class="odd">
+<td>banana – cat</td>
+<td>0.22</td>
+<td>0.68</td>
+</tr>
+<tr class="even">
+<td>song – singer</td>
+<td>0.62</td>
+<td>0.79</td>
+</tr>
+<tr class="odd">
+<td>singer – parrot</td>
+<td>0.03</td>
+<td>0.23</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Troubleshooting — Incorrect Billing Values
+<span class="screen-reader-only">Tip</span>Takeaway
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Problem.</strong> Rated usage values shown in the Billing Dashboard occasionally didn’t match actual resource usage.</p>
-<p><strong>Investigation.</strong> Queried CloudKitty’s underlying OpenSearch index directly to inspect the raw rated-usage records behind the discrepancy.</p>
-<p><strong>Resolution.</strong> Corrected the affected records in OpenSearch so the billing figures reflected actual usage again.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is a separate use of OpenSearch from the AIOps project (Section 6), where OpenSearch stores parsed Snort security logs. Here, OpenSearch is CloudKitty’s billing data store within MetaOps.</p>
+<p>The <code>md</code> model ranks pairs the way a person would: <em>cat–monkey</em> (both animals) scores well above <em>banana–cat</em>. The <code>sm</code> model has no real word vectors, so its similarities are much flatter and less meaningful. <em>banana–cat</em> scores almost the same as <em>cat–monkey</em>. The model you choose matters as much as the method you use.</p>
 </div>
 </div>
 </section>
-<section id="monitoring" class="level2">
-<h2 class="anchored" data-anchor-id="monitoring">7. Monitoring</h2>
+<section id="garden-path-sentences" class="level3">
+<h3 class="anchored" data-anchor-id="garden-path-sentences">Garden-path sentences</h3>
+<p>I ran tokenisation and named-entity recognition over <em>garden-path</em> sentences such as “The cotton clothing is made of grows in Mississippi”. These sentences are hard for people to parse at first reading, and the task tested how a statistical parser handles them.</p>
+</section>
+</section>
+<section id="web-basics" class="level2">
+<h2 class="anchored" data-anchor-id="web-basics">6. Web Basics</h2>
 <ul>
-<li>Integrated metrics collected from Prometheus and Ceilometer into the console to display VM/resource status</li>
-<li>Provided infrastructure monitoring dashboards via Managed Grafana</li>
+<li>An introduction to <strong>Django</strong> project structure (project setup, settings, URL routing, admin)</li>
 </ul>
 </section>
-<section id="what-i-learned" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-learned">8. What I Learned</h2>
+<section id="what-it-gave-me" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-gave-me">7. What It Gave Me</h2>
 <ul>
-<li>Hands-on understanding of private cloud architecture and the OpenStack resource model</li>
-<li>The cloud resource lifecycle (request → approval → provisioning → usage → billing)</li>
-<li>Experience integrating a CloudKitty-based billing system</li>
-<li>Experience building a monitoring pipeline (Prometheus/Ceilometer/Grafana)</li>
-<li>Long-term experience operating a platform that evolved across multiple stages (monitoring → console improvements → resource management → backup)</li>
+<li>A first, hands-on foundation in the Python data stack (pandas, seaborn, scikit-learn)</li>
+<li>A habit of checking whether a result <em>makes sense</em>, not just whether the code runs, as in the spaCy model comparison</li>
+<li>The starting point for moving from platform engineering toward data science, which I am now continuing with an MSc in Data Science at the University of Bath</li>
 </ul>
 
 

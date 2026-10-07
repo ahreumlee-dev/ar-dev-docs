@@ -4,12 +4,20 @@ page-layout: full
 toc: false
 ---
 
-::: {.hero}
-# Amber Lee
-**Platform / Infrastructure Engineer**
-
-A record of building, operating, and troubleshooting across every layer of a platform — Kubernetes-based service deployment and operations, Kubeflow-based GPU Notebook environments, OpenStack-based private cloud management, Keycloak-based authentication integration, and LLM Agent-driven AIOps.
-:::
+```{=html}
+<section class="hero">
+  <div class="hero-tag"><span>MSc DATA SCIENCE · UNIVERSITY OF BATH</span></div>
+  <h1>AHREUM <span class="amber">(AMBER)</span> LEE</h1>
+  <div class="hero-role">Former Platform &amp; Infrastructure Engineer</div>
+  <p>A record of building, operating, and troubleshooting across every layer of a platform — Kubernetes-based service deployment and operations, Kubeflow-based GPU Notebook environments, OpenStack-based private cloud management, Keycloak-based authentication integration, and LLM Agent-driven AIOps.</p>
+  <div class="hero-fields">
+    <div><div class="label">EMAIL</div><div class="value"><a href="mailto:fmadkdl113@gmail.com">fmadkdl113@gmail.com</a></div></div>
+    <div><div class="label">GITHUB</div><div class="value"><a href="https://github.com/ahreumlee-dev">github.com/ahreumlee-dev</a></div></div>
+    <div><div class="label">LINKEDIN</div><div class="value"><a href="https://www.linkedin.com/in/ahreum-lee-012a58249">in/ahreum-lee-012a58249</a></div></div>
+    <div><div class="label">BACKGROUND</div><div class="value">Data · Cloud · MLOps</div></div>
+  </div>
+</section>
+```
 
 ## Focus Areas
 
@@ -55,6 +63,33 @@ AIOps system connecting an LLM Agent to existing infrastructure platforms
 <span class="keyword-tag">OpenWebUI</span>
 <span class="keyword-tag">Keycloak</span>
 <span class="keyword-tag">LLM Agent</span>
+:::
+
+:::
+
+## Earlier Work
+
+::: {.card-grid .secondary}
+
+::: {.project-card}
+### [Tag A Trip](projects/tag-a-trip.qmd)
+University capstone — a travel planning and review-sharing platform. Led the team across planning, design, frontend, and AWS deployment
+
+<span class="keyword-tag">React</span>
+<span class="keyword-tag">Spring Boot</span>
+<span class="keyword-tag">Jenkins</span>
+<span class="keyword-tag">AWS</span>
+<span class="keyword-tag">Collaborative Filtering</span>
+:::
+
+::: {.project-card}
+### [Data Science Bootcamp](projects/bootcamp.qmd)
+HyperionDev (UK) — Python, pandas, linear regression, and NLP with spaCy
+
+<span class="keyword-tag">Python</span>
+<span class="keyword-tag">pandas</span>
+<span class="keyword-tag">scikit-learn</span>
+<span class="keyword-tag">spaCy</span>
 :::
 
 :::

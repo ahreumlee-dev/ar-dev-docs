@@ -128,10 +128,6 @@ The authentication structure for accessing the competition web platform and Kube
 - Platform ↔ Keycloak integration
 - Per-team Notebook access control
 
-::: {.callout-note}
-[TODO: fill in further detail once the OAuth/OIDC implementation specifics are confirmed]
-:::
-
 ## 6. Submission & Scoring System
 
 ```{mermaid}
@@ -177,10 +173,6 @@ Ran an isolated Kubernetes Job for each submission to perform scoring.
 - The scoring code checks out a specific tag/commit from a separately version-controlled repository before running
 - **The hidden ground truth is mounted read-only and is never mounted into participant (student) namespaces** — scoring runs in a namespace isolated from participants' own work environment
 - Results are stored in the database and reflected on the leaderboard
-
-::: {.callout-note}
-[TODO: only disclose the specific scoring algorithm or competition data to the extent it can be made public]
-:::
 
 ## 7. Validation Infrastructure
 
@@ -259,10 +251,6 @@ Identified a reverse-proxy buffering/request-handling issue during large model f
 ### Incident — Notebook OOM
 
 Investigated Pod/Kernel abnormalities caused by spikes in Notebook memory usage and addressed them by adjusting resource limits.
-
-::: {.callout-note}
-[TODO: add any real Pod Scheduling / Provisioning incidents, if they occurred]
-:::
 
 ## 9. What I Learned
 

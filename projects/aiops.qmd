@@ -58,10 +58,6 @@ Bot: Lists possible causes (image pulling, volume mounting, init container delay
      suggests next diagnostic steps such as running kubectl describe pod
 ```
 
-::: {.callout-note}
-[TODO: when adding screenshots, replace real node hostnames, internal IPs, and internal Docker registry addresses with generalized examples]
-:::
-
 ::: {#fig-slack-bot}
 ![](../images/aiops/slack-crashloopbackoff.png)
 

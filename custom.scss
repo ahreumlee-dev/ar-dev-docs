@@ -1,60 +1,148 @@
 /*-- scss:defaults --*/
 
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
+// Matches the business card: deep navy + warm orange, Archivo + JetBrains Mono, square corners
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-$font-family-sans-serif: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+$navy:        #13294B;
+$navy-ink:    #0B1A33;
+$orange:      #E8762B;
+$orange-text: #B4520F;   // orange dark enough for text on white (AA)
+$orange-soft: #FDF0E6;
+$slate:       #4A5872;
+$line:        #D9DEE7;
+$paper:       #F6F7F9;
 
-// Blue / sky-blue palette
-$primary:   #2563eb;  // main blue
-$secondary: #38bdf8;  // sky blue accent
+$font-family-sans-serif: "Archivo", "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+$font-family-monospace:  "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+$headings-font-weight: 800;
+
+$primary:    $navy;
+$secondary:  $orange;
 $body-bg:    #ffffff;
-$body-color: #1f2937;
-$link-color: $primary;
+$body-color: #1B2433;
+$link-color: $navy;
 
-$navbar-bg: #eff6ff;
-$navbar-fg: #1e3a8a;
-$navbar-hl: $primary;
+$navbar-bg: $navy;
+$navbar-fg: #ffffff;
+$navbar-hl: $orange;
 
-$footer-bg: #f0f9ff;
-$footer-fg: #475569;
+$footer-bg: $navy;
+$footer-fg: #C9D1DE;
 
-$code-color: #2563eb;
-$code-bg:    #eff6ff;
+$code-color: $navy;
+$code-bg:    $paper;
+
+$border-radius:    0;
+$border-radius-sm: 0;
+$border-radius-lg: 0;
 
 /*-- scss:rules --*/
 
 body {
   font-feature-settings: "tnum";
+  letter-spacing: 0.002em;
 }
 
+/* ---------- Navbar ---------- */
+
 .navbar {
-  border-bottom: 1px solid #dbeafe;
-  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.06);
+  border-bottom: 3px solid $orange;
+  box-shadow: none;
 }
 
 .navbar-title {
-  font-weight: 700;
-  color: #1e3a8a !important;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #ffffff !important;
 }
 
+.navbar .nav-link {
+  font-weight: 600;
+}
+
+.navbar .dropdown-menu {
+  border: 1px solid $line;
+  border-top: 3px solid $orange;
+  box-shadow: 0 8px 24px rgba(11, 26, 51, 0.12);
+}
+
+.navbar .dropdown-header {
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: $orange-text;
+}
+
+/* ---------- Headings ---------- */
+
 h1, h2, h3, h4 {
-  font-weight: 700;
-  color: #1e3a8a;
+  font-weight: 800;
+  color: $navy;
+  letter-spacing: -0.01em;
+}
+
+h1.title {
+  font-size: 2.4rem;
+}
+
+.quarto-title .subtitle {
+  font-family: $font-family-monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: $slate;
+  letter-spacing: 0;
 }
 
 h2 {
-  border-bottom: 2px solid #dbeafe;
-  padding-bottom: 0.35rem;
+  border-bottom: 1px solid $line;
+  padding-bottom: 0.4rem;
+  margin-top: 2.6rem;
 }
 
-a {
-  color: $primary;
+h3 {
+  font-weight: 700;
 }
+
+/* ---------- Links ---------- */
+
+a {
+  color: $navy;
+  text-decoration-color: $orange;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
 a:hover {
-  color: $secondary;
+  color: $orange-text;
+}
+
+/* ---------- Table of contents ---------- */
+
+#TOC .toc-actions, nav[role="doc-toc"] h2, #toc-title {
+  font-family: $font-family-monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $orange-text;
+  border-bottom: none;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a {
+  color: $slate;
 }
 
 .sidebar nav[role="doc-toc"] ul > li > a.active {
-  color: $primary;
-  border-left: 2px solid $primary;
+  color: $navy;
+  font-weight: 600;
+  border-left: 2px solid $orange;
+}
+
+/* ---------- Footer ---------- */
+
+.nav-footer {
+  border-top: 3px solid $orange;
+  font-family: $font-family-monospace;
+  font-size: 0.8rem;
 }

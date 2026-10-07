@@ -1,9 +1,10 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Ahreum (Amber) Lee"
-  description: "Platform / Infrastructure Engineer — Engineering Portfolio"
+  description: "MSc Data Science · Former Platform & Infrastructure Engineer — Portfolio"
   navbar:
     left:
       - href: index.qmd
@@ -18,10 +19,19 @@ website:
             text: MetaOps Cloud Console
           - href: projects/aiops.qmd
             text: AIOps Platform
+          - text: "---"
+          - text: "Earlier Work"
+          - href: projects/tag-a-trip.qmd
+            text: Tag A Trip (Capstone)
+          - href: projects/bootcamp.qmd
+            text: Data Science Bootcamp
     right:
       - icon: github
-        href: https://github.com/
+        href: https://github.com/ahreumlee-dev
         aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/ahreum-lee-012a58249
+        aria-label: LinkedIn
 
   page-footer:
     center: "© 2026 Amber Lee"
@@ -37,6 +47,8 @@ format:
     code-copy: true
     highlight-style: github
     fig-align: center
+    mermaid:
+      theme: neutral
 
 execute:
   freeze: auto
