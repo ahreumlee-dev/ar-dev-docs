@@ -77,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1d31a4f7a251bade64c834abd567611.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7a832fe8b7ec152c349fbebab31cd0e6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-f9d0feaedb2705bbf7774ef7e4e0ae28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,6 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="mermaid-theme" content="neutral">
 <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -158,12 +159,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../projects/aiops.html">
  <span class="dropdown-text">AIOps Platform</span></a>
   </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Earlier Work</li>
+        <li>
+    <a class="dropdown-item" href="../projects/tag-a-trip.html">
+ <span class="dropdown-text">Tag A Trip (Capstone)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/bootcamp.html">
+ <span class="dropdown-text">Data Science Bootcamp</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img" aria-label="GitHub">
+    <a class="nav-link" href="https://github.com/ahreumlee-dev"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/ahreum-lee-012a58249"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -418,19 +434,6 @@ Figure&nbsp;7: Admin — final-round submission status. Shows each team’s subm
 <li>Platform ↔︎ Keycloak integration</li>
 <li>Per-team Notebook access control</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>[TODO: fill in further detail once the OAuth/OIDC implementation specifics are confirmed]</p>
-</div>
-</div>
 </section>
 <section id="submission-scoring-system" class="level2">
 <h2 class="anchored" data-anchor-id="submission-scoring-system">6. Submission &amp; Scoring System</h2>
@@ -485,19 +488,6 @@ Duplicate / New submission</code></pre>
 <li><strong>The hidden ground truth is mounted read-only and is never mounted into participant (student) namespaces</strong> — scoring runs in a namespace isolated from participants’ own work environment</li>
 <li>Results are stored in the database and reflected on the leaderboard</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>[TODO: only disclose the specific scoring algorithm or competition data to the extent it can be made public]</p>
-</div>
-</div>
 </section>
 </section>
 <section id="validation-infrastructure" class="level2">
@@ -583,19 +573,6 @@ Validator</code></pre>
 <section id="incident-notebook-oom" class="level3">
 <h3 class="anchored" data-anchor-id="incident-notebook-oom">Incident — Notebook OOM</h3>
 <p>Investigated Pod/Kernel abnormalities caused by spikes in Notebook memory usage and addressed them by adjusting resource limits.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>[TODO: add any real Pod Scheduling / Provisioning incidents, if they occurred]</p>
-</div>
-</div>
 </section>
 </section>
 <section id="what-i-learned" class="level2">

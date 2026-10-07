@@ -1,72 +1,191 @@
-/* Engineering documentation style — blue / sky-blue palette, Pretendard */
+/* Portfolio styles — matched to the business card
+   navy #13294B · orange #E8762B · Archivo + JetBrains Mono · square corners, no gradients */
 
-body {
-  font-family: "Pretendard Variable", "Pretendard", -apple-system, "Segoe UI", "Noto Sans KR", sans-serif;
-  line-height: 1.65;
-  color: #1f2937;
+:root {
+  --navy: #13294B;
+  --orange: #E8762B;
+  --orange-light: #F2914A;
+  --orange-text: #B4520F;
+  --orange-soft: #FDF0E6;
+  --slate: #4A5872;
+  --line: #D9DEE7;
+  --paper: #F6F7F9;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
-/* ---------- Hero (home page) ---------- */
+body {
+  line-height: 1.65;
+  color: #1B2433;
+}
+
+/* ---------- Hero (home page) — the card's front side ---------- */
 
 .hero {
-  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
-  border: 1px solid #dbeafe;
-  border-radius: 14px;
-  padding: 2.4rem 2.2rem;
-  margin: 0.5rem 0 2rem 0;
+  background: var(--navy);
+  color: #ffffff;
+  padding: 2.8rem 2.6rem 2.4rem;
+  margin: 0.5rem 0 2.4rem 0;
+  border: none;
+  border-radius: 0;
+}
+
+.hero .hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.6rem;
+}
+
+.hero .hero-tag::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--orange-light);
+}
+
+.hero .hero-tag span {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border: 1.5px solid #ffffff;
+  padding: 0.15rem 0.55rem;
 }
 
 .hero h1 {
-  margin-top: 0;
-  color: #1e3a8a;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   border-bottom: none;
 }
 
-.hero strong {
-  color: #2563eb;
+.hero h1 .amber {
+  color: var(--orange-light);
+  font-weight: 600;
+}
+
+.hero .hero-role {
+  margin: 0.6rem 0 1.4rem 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #D5DCE8;
+}
+
+.hero p {
+  color: #E3E8F0;
+  max-width: 46rem;
+}
+
+.hero .hero-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem 2rem;
+  margin-top: 1.8rem;
+}
+
+.hero .hero-fields .label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--orange-light);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  margin-bottom: 0.15rem;
+}
+
+.hero .hero-fields .value,
+.hero .hero-fields .value a {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.hero .hero-fields .value a:hover {
+  color: var(--orange-light);
+}
+
+/* ---------- Mono labels (card-style section eyebrows) ---------- */
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange-text);
 }
 
 /* ---------- Project meta table ---------- */
 
 .project-meta {
-  border: 1px solid #dbeafe;
-  border-radius: 8px;
-  padding: 0.9rem 1.2rem;
-  margin: 1rem 0 1.5rem 0;
-  background: #f0f9ff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--orange);
+  border-radius: 0;
+  padding: 1rem 1.3rem;
+  margin: 1rem 0 1.8rem 0;
+  background: var(--paper);
   font-size: 0.92rem;
 }
 
 .project-meta table {
   width: 100%;
   border: none;
+  margin: 0;
+  table-layout: auto;
+}
+
+.project-meta colgroup {
+  display: none;
+}
+
+.project-meta thead {
+  display: none;
 }
 
 .project-meta td {
   border: none;
-  padding: 0.15rem 0.5rem 0.15rem 0;
+  padding: 0.2rem 0.6rem 0.2rem 0;
   vertical-align: top;
+  background: transparent !important;
 }
 
 .project-meta td:first-child {
+  font-family: var(--mono);
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #2563eb;
-  width: 90px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange-text);
+  width: 1%;
   white-space: nowrap;
+  padding-right: 1.6rem !important;
+  padding-top: 0.32rem;
 }
 
-/* ---------- Keyword tags ---------- */
+.project-meta td:first-child strong {
+  font-weight: 600;
+}
+
+/* ---------- Keyword tags — boxed mono, like the card's MSc tag ---------- */
 
 .keyword-tag {
   display: inline-block;
-  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-  font-size: 0.8rem;
-  background: #e0f2fe;
-  color: #0369a1;
-  border: 1px solid #bae6fd;
-  border-radius: 999px;
-  padding: 0.2rem 0.65rem;
-  margin: 0 0.3rem 0.3rem 0;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid var(--navy);
+  border-radius: 0;
+  padding: 0.12rem 0.5rem;
+  margin: 0 0.3rem 0.35rem 0;
 }
 
 /* ---------- Project cards (home page) ---------- */
@@ -79,67 +198,137 @@ body {
 }
 
 .project-card {
-  border: 1px solid #dbeafe;
-  border-radius: 10px;
-  padding: 1.3rem;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--navy);
+  border-radius: 0;
+  padding: 1.3rem 1.3rem 1rem;
   background: #ffffff;
-  transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .project-card:hover {
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
-  border-color: #93c5fd;
-  transform: translateY(-2px);
+  border-top-color: var(--orange);
+  box-shadow: 0 10px 24px rgba(11, 26, 51, 0.08);
 }
 
 .project-card h3 {
   margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
 }
 
 .project-card h3 a {
-  color: #1e3a8a;
+  font-weight: 800;
+}
+
+.project-card h3 a {
+  color: var(--navy);
   text-decoration: none;
 }
 
 .project-card h3 a:hover {
-  color: #2563eb;
+  color: var(--orange-text);
+}
+
+.project-card p {
+  color: #344157;
+}
+
+/* Earlier-work cards sit one step quieter */
+.card-grid.secondary .project-card {
+  border-top-color: var(--line);
+  background: var(--paper);
+}
+
+.card-grid.secondary .project-card:hover {
+  border-top-color: var(--orange);
 }
 
 /* ---------- Figures ---------- */
 
 figure img {
-  border: 1px solid #dbeafe;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 figcaption {
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--slate);
   text-align: center;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+  font-size: 0.93rem;
+}
+
+table thead th {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange-text);
+  border-bottom: 2px solid var(--navy) !important;
 }
 
 /* ---------- Code ---------- */
 
 code {
-  font-size: 0.88em;
+  font-size: 0.86em;
 }
 
-pre {
-  border: 1px solid #dbeafe;
-  border-radius: 8px;
+pre, div.sourceCode {
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
 }
 
-/* ---------- Callouts (soften default colors toward the palette) ---------- */
+/* ---------- Callouts ---------- */
 
-div.callout-note.callout-style-default {
-  border-left-color: #38bdf8;
+div.callout {
+  border-radius: 0;
 }
 
+div.callout-note.callout-style-default,
 div.callout-important.callout-style-default {
-  border-left-color: #2563eb;
+  border-left-color: var(--navy);
 }
 
 div.callout-tip.callout-style-default {
-  border-left-color: #0ea5e9;
+  border-left-color: var(--orange);
+}
+
+div.callout-note > .callout-header,
+div.callout-important > .callout-header {
+  background-color: var(--paper) !important;
+}
+
+div.callout-tip > .callout-header {
+  background-color: var(--orange-soft) !important;
+}
+
+div.callout .callout-header {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Mermaid diagrams ---------- */
+
+.mermaid .node rect,
+.mermaid .node polygon,
+.mermaid .node path {
+  fill: #ffffff !important;
+  stroke: var(--navy) !important;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 576px) {
+  .hero {
+    padding: 2rem 1.4rem 1.8rem;
+  }
 }
