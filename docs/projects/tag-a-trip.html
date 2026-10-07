@@ -522,7 +522,7 @@ Figure&nbsp;3: Planned deployment architecture — GitHub → Jenkins on EC2 →
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/ahreumlee-dev\.github\.io\/ar-dev-docs\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Ahreum (Amber) Lee"
+  site-url: https://ahreumlee-dev.github.io/ar-dev-docs/
   description: "MSc Data Science · Former Platform & Infrastructure Engineer — Portfolio"
   navbar:
     left:
